@@ -1,16 +1,17 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
+import { ResetPasswordForm } from "./reset-password-form";
 
-export default async function HomePage() {
+export default async function ResetPasswordPage() {
   const supabase = await createClient();
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (user) {
-    redirect("/dashboard");
+  if (!user) {
+    redirect("/login");
   }
 
-  redirect("/login");
+  return <ResetPasswordForm />;
 }
